@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baby Shop — Toys</title>
+<style>
+:root {
+  --pink: #ff4d94;
+  --pink-light: #ffe6f2;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: Arial, sans-serif; background: var(--pink-light); }
+
+header {
+  background: var(--pink);
+  color: #fff;
+  padding: 18px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* Top Navigation */
+.topbar {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  padding:12px;
+  background:#fff;
+}
+.topbar button {
+  padding:8px 12px;
+  border-radius:8px;
+  border:2px solid var(--pink);
+  background:#fff;
+  color: var(--pink);
+  font-weight:700;
+  cursor:pointer;
+}
+.topbar button:hover { background: var(--pink); color:#fff; }
+
+/* Main Grid */
+main { padding:16px; }
+.grid { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; }
+.card {
+  width:190px;
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(255,77,148,0.12);
+}
+.card img { width:100%; height:150px; object-fit:cover; }
+.card .info { padding:10px; }
+.price { color:var(--pink); font-weight:700; }
+.btn { background: var(--pink); color:#fff; border:0; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; margin-top:8px; }
+
+/* Popup */
+.overlay {
+  position: fixed;
+  inset:0;
+  background: rgba(0,0,0,0.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+.popup {
+  background:#fff;
+  width:90%;
+  max-width:380px;
+  padding:16px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+</style>
+</head>
+<body>
+
+<header>Baby Shop — Toys</header>
+
+<div class="topbar">
+  <button onclick="showCategories()">Categories</button>
+  <button onclick="showAllProducts()">All Products</button>
+  <button onclick="showOffers()">Offers</button>
+</div>
+
+<main>
+  <div id="home"><h2 style="text-align:center;color:var(--pink)">Welcome to Baby Toys</h2></div>
+
+  <div id="categories" style="display:none">
+    <h3 style="text-align:center;color:var(--pink)">Toy Categories</h3>
+    <div class="grid" id="catGrid"></div>
+  </div>
+
+  <div id="products" style="display:none">
+    <h3 style="text-align:center;color:var(--pink)" id="prodTitle"></h3>
+    <div class="grid" id="productGrid"></div>
+  </div>
+
+  <div id="offers" style="display:none;text-align:center;padding:20px">
+    <h2 style="color:#ff5c8a">Special Offers</h2>
+    <div id="offerList"></div>
+  </div>
+</main>
+
+<div class="overlay" id="overlay" onclick="closePopup(event)">
+  <div class="popup" id="popupBox" onclick="event.stopPropagation()"></div>
+</div>
+
+<script>
+// ----- DATA: Add images easily here -----
+const categories = {
+  "Soft Toys": [
+    {name:"Pink Teddy", price:399, img:"E:/babyshop/teddy.jpg", desc:"Soft pink teddy bear."},
+    {name:"Fluffy Bunny", price:450, img:"E:/babyshop/bunny.jpg", desc:"Cute fluffy bunny plush."},
+  ],
+  "Activity Toys": [
+    {name:"Color Rings", price:299, img:"E:/babyshop/colour-rings.jpg", desc:"Color learning rings."},
+    {name:"Baby Rattle", price:199, img:"E:/babyshop/baby-rattle.jpg", desc:"Safe soft rattle."}
+  ]
+};
+
+// ----- VARIABLES -----
+let currentCat = null;
+let cart = [];
+
+// ----- FUNCTIONS -----
+function showCategories(){
+  hideAll();
+  document.getElementById('categories').style.display='block';
+  renderCategories();
+}
+
+function showAllProducts(){
+  hideAll();
+  document.getElementById('products').style.display='block';
+  document.getElementById('prodTitle').innerText="All Products";
+  let all = [];
+  Object.values(categories).forEach(arr=>all.push(...arr));
+  renderProducts(all);
+}
+
+function showOffers(){
+  hideAll();
+  document.getElementById('offers').style.display='block';
+  const offerHTML = [];
+  Object.values(categories).forEach(arr=>{
+    arr.forEach(p=>{
+      if(Math.random()<0.5) offerHTML.push(`<b>${p.name} - ₹${p.price} (20% OFF)</b><br>`);
+    });
+  });
+  document.getElementById('offerList').innerHTML = offerHTML.join('');
+}
+
+function openProducts(cat){
+  currentCat = cat;
+  hideAll();
+  document.getElementById('products').style.display='block';
+  document.getElementById('prodTitle').innerText=cat;
+  renderProducts(categories[cat]);
+}
+
+function renderCategories(){
+  const g = document.getElementById('catGrid');
+  g.innerHTML='';
+  Object.keys(categories).forEach(cat=>{
+    const sample = categories[cat][0];
+    g.innerHTML+=`<div class='card' onclick="openProducts('${cat}')"><img src='${sample.img}'><div class='info'><b>${cat}</b></div></div>`;
+  });
+}
+
+function renderProducts(list){
+  const g = document.getElementById('productGrid');
+  g.innerHTML='';
+  list.forEach(p=>{
+    g.innerHTML+=`
+    <div class='card'>
+      <img src='${p.img}'>
+      <div class='info'>
+        <b>${p.name}</b>
+        <div class='price'>₹${p.price}</div>
+        <button class='btn' onclick='viewProduct(${JSON.stringify(p)})'>View</button>
+      </div>
+    </div>`;
+  });
+}
+
+function viewProduct(p){
+  const box = document.getElementById('popupBox');
+  box.innerHTML = `
+    <img src='${p.img}' style='width:160px;height:150px;border-radius:10px;'>
+    <h3>${p.name}</h3>
+    <p>${p.desc}</p>
+    <h3 style='color:var(--pink)'>₹${p.price}</h3>
+    <button class='btn' onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+    <br><button class='btn' style='margin-top:6px;background:#fff;color:var(--pink);border:2px solid var(--pink)' onclick='buyNow(${JSON.stringify(p)})'>Buy Now</button>
+    <br><button class='btn' style='background:gray' onclick='closePopup({target:{id:"overlay"}})'>Close</button>
+  `;
+  document.getElementById('overlay').style.display='flex';
+}
+
+function addToCart(p){ cart.push(p); alert(`${p.name} added to cart!`); closePopup({target:{id:'overlay'}}); }
+
+function buyNow(p){
+  closePopup({target:{id:'overlay'}});
+  const old = document.getElementById('buyNowPage'); if(old) old.remove();
+  const box = document.createElement('div');
+  box.id='buyNowPage';
+  box.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;border-radius:12px;z-index:999;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.3);';
+  box.innerHTML = `
+    <h2>${p.name}</h2>
+    <img src='${p.img}' style='width:150px;border-radius:10px'>
+    <p><b>Price:</b> ₹${p.price}</p>
+    <p>${p.desc}</p>
+    <label><b>Payment Method:</b></label><br>
+    <select id='payMethod'>
+      <option value='cod'>Cash on Delivery</option>
+      <option value='upi'>UPI</option>
+      <option value='card'>Credit / Debit Card</option>
+      <option value='net'>Net Banking</option>
+    </select><br><br>
+    <label><b>Delivery Address:</b></label><br>
+    <textarea id='addrBox' rows='4' placeholder='Enter address...'></textarea><br><br>
+    <button class='btn' onclick='confirmOrder()'>Confirm</button><br><br>
+    <button class='btn' style='background:gray' onclick='document.getElementById("buyNowPage").remove()'>Close</button>
+  `;
+  document.body.appendChild(box);
+}
+
+function confirmOrder(){
+  const addr = document.getElementById('addrBox').value.trim();
+  if(addr===''){ alert('Please enter delivery address!'); return; }
+  alert('Order Confirmed!');
+  document.getElementById('buyNowPage').remove();
+}
+
+function closePopup(e){ if(e.target.id!=='overlay') return; document.getElementById('overlay').style.display='none'; }
+
+function hideAll(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('categories').style.display='none';
+  document.getElementById('products').style.display='none';
+  document.getElementById('offers').style.display='none';
+}
+</script>
+
+</body>
+</html>

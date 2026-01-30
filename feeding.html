@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Baby Feeding Products Shop</title>
+<style>
+    body { font-family: Arial; margin: 0; background: #ffeef5; }
+    header { background: #ff75aa; padding: 20px; text-align: center; color: white; font-size: 30px; }
+
+    .category-buttons { text-align: center; margin: 20px; }
+    .cat-btn { background: #ff99c8; border: none; padding: 15px 25px; margin: 10px; border-radius: 10px; cursor: pointer; font-size: 18px; color: white; }
+
+    .slide { display: none; position: fixed; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); padding-top: 50px; }
+    .slide-box { width: 80%; max-height: 80%; overflow-y: auto; margin: auto; background: white; padding: 20px; border-radius: 15px; }
+
+    .products { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+    .product { background:white; padding:15px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
+    .btn { padding:10px; width:100%; border:none; border-radius:8px; margin-top:8px; cursor:pointer; }
+    .add { background:#ffb6d5; }
+    .buy { background:#ff85c2; color:white; }
+    .close { background:red; color:white; margin-top:20px; }
+
+    /* Checkout Slide */
+    #checkoutSlide { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); padding-top:50px; }
+    #checkoutBox { width:400px; margin:auto; background:white; padding:20px; border-radius:15px; }
+
+    #confirmSlide { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); text-align:center; padding-top:150px; color:white; font-size:30px; }
+</style>
+</head>
+<body>
+<header>Baby Feeding Products Shop</header>
+
+<div class="category-buttons">
+    <button class="cat-btn" onclick="openCategory('bottles')">Bottles</button>
+    <button class="cat-btn" onclick="openCategory('sippers')">Sippers</button>
+    <button class="cat-btn" onclick="openCategory('breast')">Breastfeeding</button>
+    <button class="cat-btn" onclick="openCategory('bibs')">Bibs & Cleaning</button>
+    <button class="cat-btn" onclick="openCategory('food')">Food & Snacks</button>
+</div>
+
+<!-- CATEGORY TEMPLATE REPEATED WITH 5 PRODUCTS EACH -->
+<div id="bottles" class="slide"><div class="slide-box">
+<h2>Bottles</h2>
+<div class="products">
+<!-- Product detail slide -->
+<div id="detailSlide" class="slide"><div class="slide-box">
+<h2 id="detailName"></h2>
+<p id="detailDesc"></p>
+<p><b id="detailPrice"></b></p>
+<p style="color:#ff0088" id="detailOffer"></p>
+<button class="btn buy" onclick="buyNow(detailName.innerHTML, detailPrice.innerHTML.replace('₹',''))">Buy Now</button>
+<button class="btn close" onclick="closeDetail()">Close</button>
+</div></div>
+<div class="product"><h3>Classic Feeding Bottle</h3><p>Durable and safe.</p><p><b>₹250</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Classic Feeding Bottle',250)">Buy Now</button></div>
+<div class="product"><h3>Anti‑Colic Bottle</h3><p>Reduces air intake.</p><p><b>₹350</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Anti‑Colic Bottle',350)">Buy Now</button></div>
+<div class="product"><h3>Silicone Bottle</h3><p>Soft and safe.</p><p><b>₹420</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Silicone Bottle',420)">Buy Now</button></div>
+<div class="product"><h3>Wide‑Neck Bottle</h3><p>For thick liquids.</p><p><b>₹300</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Wide‑Neck Bottle',300)">Buy Now</button></div>
+<div class="product"><h3>Glass Bottle</h3><p>Eco‑friendly.</p><p><b>₹500</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Glass Bottle',500)">Buy Now</button></div>
+</div>
+<button class="btn close" onclick="closeSlide('bottles')">Close</button>
+</div></div>
+
+<!-- 4 MORE CATEGORIES with 5 PRODUCTS EACH -->
+
+<!-- SIPPERS -->
+<div id="sippers" class="slide"><div class="slide-box">
+<h2>Sippers</h2>
+<div class="products">
+<div class="product"><h3>Soft Spout Sipper</h3><p>Gentle spout for easy drinking.</p><p><b>₹220</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Soft Spout Sipper',220)">Buy Now</button></div>
+<div class="product"><h3>Straw Sipper</h3><p>Leak-proof straw design.</p><p><b>₹260</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Straw Sipper',260)">Buy Now</button></div>
+<div class="product"><h3>360° Cup</h3><p>Spill-proof toddler cup.</p><p><b>₹300</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('360° Cup',300)">Buy Now</button></div>
+<div class="product"><h3>Handle Sipper</h3><p>Easy-grip handles.</p><p><b>₹180</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Handle Sipper',180)">Buy Now</button></div>
+<div class="product"><h3>Insulated Sipper</h3><p>Keeps drinks warm.</p><p><b>₹350</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Insulated Sipper',350)">Buy Now</button></div>
+</div>
+<button class="btn close" onclick="closeSlide('sippers')">Close</button>
+</div></div>
+
+<!-- BREASTFEEDING -->
+<div id="breast" class="slide"><div class="slide-box">
+<h2>Breastfeeding</h2>
+<div class="products">
+<div class="product"><h3>Breast Pump</h3><p>Comfortable suction pump.</p><p><b>₹550</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Breast Pump',550)">Buy Now</button></div>
+<div class="product"><h3>Milk Storage Bags</h3><p>Pre-sterilized bags.</p><p><b>₹200</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Milk Storage Bags',200)">Buy Now</button></div>
+<div class="product"><h3>Nipple Shield</h3><p>Soft silicone shield.</p><p><b>₹150</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Nipple Shield',150)">Buy Now</button></div>
+<div class="product"><h3>Nursing Cover</h3><p>Full privacy cover.</p><p><b>₹300</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Nursing Cover',300)">Buy Now</button></div>
+<div class="product"><h3>Warm Compress</h3><p>Relieves pain.</p><p><b>₹250</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Warm Compress',250)">Buy Now</button></div>
+</div>
+<button class="btn close" onclick="closeSlide('breast')">Close</button>
+</div></div>
+
+<!-- BIBS & CLEANING -->
+<div id="bibs" class="slide"><div class="slide-box">
+<h2>Bibs & Cleaning</h2>
+<div class="products">
+<div class="product"><h3>Silicone Bib</h3><p>Waterproof and soft.</p><p><b>₹180</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Silicone Bib',180)">Buy Now</button></div>
+<div class="product"><h3>Cotton Bib</h3><p>Soft cotton bib.</p><p><b>₹120</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Cotton Bib',120)">Buy Now</button></div>
+<div class="product"><h3>Bottle Brush</h3><p>Deep cleaning brush.</p><p><b>₹150</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Bottle Brush',150)">Buy Now</button></div>
+<div class="product"><h3>Wet Wipes</h3><p>Gentle cleaning wipes.</p><p><b>₹80</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Wet Wipes',80)">Buy Now</button></div>
+<div class="product"><h3>Sterilizing Liquid</h3><p>Kills 99% germs.</p><p><b>₹200</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Sterilizing Liquid',200)">Buy Now</button></div>
+</div>
+<button class="btn close" onclick="closeSlide('bibs')">Close</button>
+</div></div>
+
+<!-- FOOD & SNACKS -->
+<div id="food" class="slide"><div class="slide-box">
+<h2>Food & Snacks</h2>
+<div class="products">
+<div class="product"><h3>Fruit Puree</h3><p>Organic fruit puree.</p><p><b>₹60</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Fruit Puree',60)">Buy Now</button></div>
+<div class="product"><h3>Baby Cereal</h3><p>Iron-rich cereal.</p><p><b>₹180</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Baby Cereal',180)">Buy Now</button></div>
+<div class="product"><h3>Teething Sticks</h3><p>Mild snack for teething.</p><p><b>₹90</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Teething Sticks',90)">Buy Now</button></div>
+<div class="product"><h3>Veg Mix Puree</h3><p>Healthy veg puree.</p><p><b>₹70</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Veg Mix Puree',70)">Buy Now</button></div>
+<div class="product"><h3>Snack Puffs</h3><p>Light crunchy snack.</p><p><b>₹110</b></p><button class="btn add" onclick="addCart()">Add to Cart</button><button class="btn buy" onclick="buyNow('Snack Puffs',110)">Buy Now</button></div>
+</div>
+<button class="btn close" onclick="closeSlide('food')">Close</button>
+</div></div>
+
+<!-- CHECKOUT SLIDE -->
+<div id="checkoutSlide">
+<div id="checkoutBox">
+<h2>Checkout</h2>
+<p id="itemName"></p>
+<p id="itemPrice"></p>
+<label>Payment Method</label>
+<select id="payment">
+<option value="">Select</option>
+<option>Credit Card</option>
+<option>Debit Card</option>
+<option>UPI</option>
+<option>Cash on Delivery</option>
+</select><br>
+<label>Delivery Address</label>
+<input id="address" type="text" placeholder="Enter address" required><br>
+<label>Delivery Date</label><br>
+<input id="date" type="date" required>
+<button class="btn buy" onclick="placeOrder()">Confirm Order</button>
+<button class="btn close" onclick="closeCheckout()">Close</button>
+</div>
+</div>
+
+<!-- ORDER CONFIRMATION -->
+<div id="confirmSlide">Order Confirmed! 🎉</div>
+
+<script>
+let selectedItem = '';
+let selectedPrice = 0;
+
+function openCategory(id){ document.getElementById(id).style.display='block'; }
+function closeSlide(id){ document.getElementById(id).style.display='none'; }
+
+function addCart(){ alert("Added to cart successfully!"); }
+
+function buyNow(name, price){
+    selectedItem = name;
+    selectedPrice = price;
+    document.getElementById('itemName').innerHTML = '<b>Product:</b> ' + name;
+    document.getElementById('itemPrice').innerHTML = '<b>Price:</b> ₹' + price;
+    document.getElementById('checkoutSlide').style.display='block';
+}
+
+function closeCheckout(){ document.getElementById('checkoutSlide').style.display='none'; }
+
+function placeOrder(){
+    let pay = document.getElementById('payment').value;
+    let addr = document.getElementById('address').value;
+    let date = document.getElementById('date').value;
+
+    if(pay=='' || addr=='' || date==''){
+        alert('Please fill all details!'); return;
+    }
+
+    document.getElementById('checkoutSlide').style.display='none';
+    document.getElementById('confirmSlide').style.display='block';
+
+    setTimeout(()=>{ document.getElementById('confirmSlide').style.display='none'; },3000);
+}
+function openDetail(name, desc, price){
+    document.getElementById('detailName').innerHTML = name;
+    document.getElementById('detailDesc').innerHTML = desc;
+    document.getElementById('detailPrice').innerHTML = '₹' + price;
+    document.getElementById('detailOffer').innerHTML = '10% OFF Today!';
+    document.getElementById('detailSlide').style.display='block';
+}
+function closeDetail(){ document.getElementById('detailSlide').style.display='none'; }
+</script>
+
+</body>
+</html>

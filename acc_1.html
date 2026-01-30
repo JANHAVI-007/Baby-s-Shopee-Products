@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Products Shop</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
+    h1 { background: #ffb6c1; padding: 20px; text-align: center; color: white; margin: 0; }
+
+    /* CATEGORY LIST */
+    #categories { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; justify-content: center; }
+    .category { width: 250px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); cursor: pointer; text-align: center; }
+    .category img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
+
+    /* PRODUCT LIST */
+    #productsPage { display: none; padding: 20px; }
+    .products { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .product { width: 250px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .product img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; }
+
+    /* PRODUCT DETAILS */
+    #productDetails { display: none; padding: 20px; }
+    #productDetails img { width: 300px; border-radius: 10px; }
+
+    button { padding: 10px; width: 100%; margin-top: 10px; border: none; cursor: pointer; border-radius: 6px; }
+    .add { background: #ff8da1; color: white; }
+    .buy { background: #ff5c77; color: white; }
+
+    select, input { width: 100%; padding: 8px; margin-top: 10px; }
+
+    /* BUY POPUP */
+    #buyPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; }
+    #popupBox { background: white; padding: 20px; width: 350px; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Baby Accessories Shop</h1>
+
+<!-- CATEGORY SECTION -->
+<div id="categories"></div>
+
+<!-- PRODUCT LIST PAGE -->
+<div id="productsPage">
+    <h2 id="categoryTitle"></h2>
+    <button onclick="backToCategories()">⬅ Back</button>
+    <div class="products" id="products"></div>
+</div>
+
+<!-- PRODUCT DETAILS PAGE -->
+<div id="productDetails">
+    <button onclick="backToProducts()">⬅ Back</button>
+    <h2 id="dName"></h2>
+    <img id="dImg">
+    <p id="dPrice"></p>
+    <p id="dSize"></p>
+
+    <label>Select Size:</label>
+    <select id="sizeSelect">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+    </select>
+
+    <button class="add" onclick="addToCart()">Add to Cart</button>
+    <button class="buy" onclick="openBuyNow()">Buy Now</button>
+</div>
+
+<!-- BUY NOW POPUP -->
+<div id="buyPopup">
+    <div id="popupBox">
+        <h3 id="bName"></h3>
+
+        <label>Size Selected:</label>
+        <p id="bSize"></p>
+
+        <label>Payment Method</label>
+        <select id="payMethod">
+            <option>Credit Card</option>
+            <option>Debit Card</option>
+            <option>UPI</option>
+            <option>Net Banking</option>
+        </select>
+
+        <label>Delivery Address</label>
+        <input type="text" id="address" placeholder="Enter delivery address">
+
+        <p id="deliveryDate"></p>
+
+        <button onclick="confirmOrder()" class="buy">Confirm Order</button>
+        <button onclick="closeBuyPopup()">Close</button>
+    </div>
+</div>
+
+<script>
+// CATEGORY + PRODUCT DATA
+const categories = [
+    {
+        name: "Baby Grooming Set",
+        img: "E:/BabyShop/Grooming Kit.jpg",
+        products: [
+            { name: "Grooming Kit", price: 550, img: "E:/BabyShop/Grooming Kit.jpg" },
+            { name: "Nail Clipper", price: 150, img: "E:/BabyShop/Nail Clipper.jpg" },
+            { name: "Hair Brush", price: 200, img: "E:/BabyShop/Hair Brush.jpg" },
+            { name: "Comb Set", price: 180, img: "E:/BabyShop/Comb Set.jpg" },
+            { name: "Cleaning Swabs", price: 120, img: "E:/BabyShop/Cleaning Swabs.jpg" }
+        ]
+    },
+    {
+        name: "Goggles & Hairbands",
+        img: "E:/BabyShop/cute hairbands.jpg",
+        products: [
+            { name: "Cute Hairband", price: 120, img: "E:/BabyShop/cute hairbands.jpg" },
+            { name: "Baby Sunglasses", price: 300, img: "E:/BabyShop/Baby Sunglasses.jpg" },
+            { name: "Bow Hairband", price: 150, img: "E:/BabyShop/Bow Hairband.jpg" },
+            { name: "Printed Goggles", price: 280, img: "E:/BabyShop/Printed Goggles.jpg" },
+            { name: "Soft Headband", price: 140, img: "E:/BabyShop/Soft Headband.jpg" }
+        ]
+    },
+    {
+        name: "Baby Chairs",
+        img: "E:/BabyShop/Feeding Chair.jpg",
+        products: [
+            { name: "Feeding Chair", price: 1800, img: "E:/BabyShop/Feeding Chair.jpg" },
+            { name: "Rocking Chair", price: 2500, img: "E:/BabyShop/Rocking Chair.jpg"},
+            { name: "Soft Cushion Chair", price: 1400, img: "E:/BabyShop/Soft Cushion Chair.jpg" },
+            { name: "Portable Chair", price: 1600, img: "E:/BabyShop/Portable Chair.jpg" },
+            { name: "Foldable Baby Chair", price: 2000, img: "E:/BabyShop/Foldable Baby Chair.jpg" }
+        ]
+    },
+    {
+        name: "Baby Stroller",
+        img: "E:/BabyShop/Compact Stroller.jpg",
+        products: [
+            { name: "Compact Stroller", price: 5000, img: "E:/BabyShop/Compact Stroller.jpg" },
+            { name: "Travel Stroller", price: 7500, img: "E:/BabyShop/Travel Stroller.jpg" },
+            { name: "Luxury Stroller", price: 12000, img: "E:/BabyShop/Luxury Stroller.jpg" },
+            { name: "Twin Stroller", price: 15000, img: "E:/BabyShop/Twin Stroller.jpg" },
+            { name: "Basic Stroller", price: 4000, img: "E:/BabyShop/Basic Stroller.jpg" }
+        ]
+    },
+    {
+        name: "Baby Bath Essentials",
+        img: "E:/BabyShop/Baby Shampoo.jpg",
+        products: [
+            { name: "Baby Shampoo", price: 300, img: "E:/BabyShop/Baby Shampoo.jpg" },
+            { name: "Soap Bar", price: 100, img: "E:/BabyShop/Soap Bar.jpg" },
+            { name: "Soft Towel", price: 350, img: "E:/BabyShop/Soft Towel.jpg" },
+            { name: "Bath Tub", price: 900, img: "E:/BabyShop/Bath Tub.jpg" },
+            { name: "Baby Oil", price: 250, img: "E:/BabyShop/Baby Oil.jpg" }
+        ]
+    }
+];
+
+let selectedCategory = null;
+let selectedProduct = null;
+
+// LOAD CATEGORIES
+function loadCategories() {
+    const c = document.getElementById("categories");
+    categories.forEach((cat, index) => {
+        c.innerHTML += `
+            <div class='category' onclick='openCategory(${index})'>
+                <img src='${cat.img}'>
+                <h3>${cat.name}</h3>
+            </div>
+        `;
+    });
+}
+loadCategories();
+
+// OPEN CATEGORY
+function openCategory(index) {
+    selectedCategory = categories[index];
+    document.getElementById("categoryTitle").innerText = selectedCategory.name;
+    document.getElementById("categories").style.display = "none";
+    document.getElementById("productsPage").style.display = "block";
+
+    const p = document.getElementById("products");
+    p.innerHTML = "";
+    selectedCategory.products.forEach((prod, i) => {
+        p.innerHTML += `
+            <div class='product'>
+                <img src='${prod.img}'>
+                <h3>${prod.name}</h3>
+                <p>Price: ₹${prod.price}</p>
+                <button class='buy' onclick='openProduct(${i})'>View</button>
+            </div>
+        `;
+    });
+}
+
+function backToCategories() {
+    document.getElementById("productsPage").style.display = "none";
+    document.getElementById("categories").style.display = "flex";
+}
+
+// OPEN PRODUCT DETAILS
+function openProduct(i) {
+    selectedProduct = selectedCategory.products[i];
+    document.getElementById("productsPage").style.display = "none";
+    document.getElementById("productDetails").style.display = "block";
+
+    document.getElementById("dName").innerText = selectedProduct.name;
+    document.getElementById("dImg").src = selectedProduct.img;
+    document.getElementById("dPrice").innerText = "Price: ₹" + selectedProduct.price;
+}
+
+function backToProducts() {
+    document.getElementById("productDetails").style.display = "none";
+    document.getElementById("productsPage").style.display = "block";
+}
+
+// ADD TO CART
+function addToCart() {
+    alert("Product added to cart successfully!");
+}
+
+// BUY NOW POPUP
+function openBuyNow() {
+    const size = document.getElementById("sizeSelect").value;
+    document.getElementById("bName").innerText = selectedProduct.name;
+    document.getElementById("bSize").innerText = size;
+
+    let d = new Date();
+    d.setDate(d.getDate() + 5);
+    document.getElementById("deliveryDate").innerText = "Expected Delivery: " + d.toDateString();
+
+    document.getElementById("buyPopup").style.display = "flex";
+}
+
+function closeBuyPopup() {
+    document.getElementById("buyPopup").style.display = "none";
+}
+
+// CONFIRM ORDER
+function confirmOrder() {
+    const address = document.getElementById("address").value.trim();
+    if (address === "") {
+        alert("Please enter delivery address.");
+        return;
+    }
+    alert("Order Confirmed Successfully!");
+    closeBuyPopup();
+}
+</script>
+
+</body>
+</html>

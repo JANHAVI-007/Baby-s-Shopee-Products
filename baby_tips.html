@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Parenting Tips - Dynamic</title>
+
+<!-- Font Awesome for colorful icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+nav {
+    background: #ffd6e7;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.logo {
+    font-size: 26px;
+    color: #ff6fa8;
+    font-weight: bold;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+*{ margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+body{ overflow-x:hidden; transition: all 0.5s ease; }
+
+body.boy{ background: linear-gradient(135deg, #c8e7ff, #a0d8ff); }
+body.boy::before{
+    content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:url('E:\software_project\baby_boy.jpg') repeat; opacity:0.05; pointer-events:none;
+}
+body.girl{ background: linear-gradient(135deg, #ffe3f5, #ffb6da); }
+body.girl::before{
+    content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:url('E:\software_project\baby_girl.jpg') repeat; opacity:0.05; pointer-events:none;
+}
+
+header{ display:flex; justify-content:center; align-items:center; padding:20px 40px;
+background:rgba(255,255,255,0.4); backdrop-filter:blur(10px); position:sticky; top:0; z-index:1000; }
+.logo{ font-size:32px; font-weight:bold; }
+.logo span{ color:#ff71b8; }
+
+.hero{ display:flex; justify-content:space-around; align-items:center; padding:80px 40px; flex-wrap:wrap; position:relative; z-index:1; }
+.hero-text{ max-width:500px; text-align:center; }
+.title{ font-size:2.8rem; color:#1d72b8; margin-bottom:10px; }
+.hero-text p{ margin-top:10px; font-size:1.2rem; }
+.cta-btn{ margin-top:20px; padding:12px 25px; border:none; color:white; border-radius:6px; cursor:pointer; transition:0.3s; background:#ff71b8; }
+.cta-btn:hover{ transform:scale(1.1); }
+.hero-image{ width:320px; transition:0.5s; }
+
+.theme-btns button{
+    margin:10px 5px 0 5px; padding:8px 16px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;
+    transition:0.3s;
+}
+.theme-btns button:hover{ transform:scale(1.1); }
+
+.section-title{ text-align:center; margin-top:60px; font-size:2rem; color:#1d72b8; }
+.card-container{ margin-top:40px; display:flex; justify-content:center; gap:25px; flex-wrap:wrap; }
+.card{ width:260px; background:white; padding:20px; text-align:center; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.15); transition:0.4s; }
+.card:hover{ transform:translateY(-10px) scale(1.05); box-shadow:0 10px 25px rgba(0,0,0,0.25); }
+.card img{ width:80px; margin-bottom:10px; }
+
+.contact{ text-align:center; padding:70px 20px; }
+.contact-btn{ padding:12px 30px; border:none; color:white; border-radius:20px; cursor:pointer; transition:0.3s; background:#1d72b8; }
+.contact-btn:hover{ transform:scale(1.1); }
+
+footer{ text-align:center; padding:15px; color:white; margin-top:40px; background:#1d72b8; }
+
+@media(max-width:768px){ .hero{ text-align:center; } .hero-image{ margin-top:30px; } }
+
+</style>
+</head>
+<body class="boy">
+
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">BabyZone💕</div>
+    <ul>
+        <li><a href="baby.html">Home</a></li>
+        <li><a href="clothes.html">Products</a></li>
+        <li><a href="card.html">Cart</a></li>
+        <li><a href="baby_tips.html">Baby Tips</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+
+<section id="hero" class="hero">
+    <div class="hero-text">
+        <h2 class="title">Bright & Happy Baby Care</h2>
+        <p>Colorful parenting tips for your little one!</p>
+        <button class="cta-btn" onclick="scrollToTips()">Explore Tips</button>
+        <div class="theme-btns">
+            <button onclick="setTheme('boy')">Boy Theme 💙</button>
+            <button onclick="setTheme('girl')">Girl Theme 💖</button>
+        </div>
+    </div>
+    <img class="hero-image" id="heroImage" src="E:\software_project\boy.jpg" alt="Baby Cartoon">
+</section>
+
+<section id="tips" class="tips">
+    <h2 class="section-title">Colorful Baby Tips</h2>
+    <div class="card-container" id="tipsContainer"></div>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Have questions about newborn parenting? We’re happy to help!</p>
+    <button class="contact-btn">Email Us</button>
+</section>
+
+<footer>
+    <p>© 2025 BabyZone | Colorful Parenting Guide</p>
+</footer>
+
+<script>
+function scrollToTips(){
+    document.getElementById("tips").scrollIntoView({behavior:"smooth"});
+}
+
+const boyTips = [
+    {icon:'<i class="fas fa-baby" style="color:#1d72b8;"></i>', title:"Feeding Tips", desc:"Feed your baby boy every 2–3 hours and burp him gently after feeding."},
+    {icon:'<i class="fas fa-football" style="color:#4db6ff;"></i>', title:"Active Play", desc:"Encourage physical playtime to build strength and coordination."},
+    {icon:'<i class="fas fa-shield-alt" style="color:#1a4d80;"></i>', title:"Safety First", desc:"Keep sharp objects and small toys out of reach to prevent accidents."}
+];
+const girlTips = [
+    {icon:'<i class="fas fa-baby" style="color:#ff71b8;"></i>', title:"Feeding Tips", desc:"Feed your baby girl every 2–3 hours and burp her gently after feeding."},
+    {icon:'<i class="fas fa-moon" style="color:#ff94c2;"></i>', title:"Sleep Routine", desc:"Maintain calm bedtime rituals with soft music and dim lighting."},
+    {icon:'<i class="fas fa-gift" style="color:#ff4da6;"></i>', title:"Toy Selection", desc:"Provide safe, educational toys suitable for development."}
+];
+
+function updateTips(gender){
+    const container = document.getElementById("tipsContainer");
+    container.innerHTML = "";
+    const tips = gender==='boy'?boyTips:girlTips;
+    tips.forEach(tip=>{
+        const card = document.createElement("div");
+        card.className="card";
+        card.innerHTML=`<div style="font-size:50px; margin-bottom:10px;">${tip.icon}</div><h3>${tip.title}</h3><p>${tip.desc}</p>`;
+        container.appendChild(card);
+    });
+}
+
+function setTheme(gender){
+    const body=document.body;
+    const heroImage=document.getElementById("heroImage");
+    if(gender==='boy'){
+        body.className='boy';
+        heroImage.src="E:\software_project\boy.jpg";
+        updateTips('boy');
+    }else{
+        body.className='girl';
+        heroImage.src="E:\software_project\baby_girl.jpg";
+        updateTips('girl');
+    }
+}
+
+setTheme('boy');
+</script>
+
+</body>
+</html>

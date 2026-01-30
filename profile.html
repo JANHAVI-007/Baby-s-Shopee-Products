@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Profile — Baby Shop</title>
+  <style>
+/* NAVIGATION */
+nav {
+    background: #ffd6e7;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.logo {
+    font-size: 26px;
+    color: #ff6fa8;
+    font-weight: bold;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+    :root{
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#ff7a59;
+      --radius:16px;
+      --shadow:0 6px 20px rgba(15,23,42,0.08);
+      font-family: Inter, system-ui, sans-serif;
+    }
+    body{margin:0;background:var(--bg);color:#0f172a}
+    .wrap{max-width:1100px;margin:32px auto;padding:20px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px}
+    h1{margin:0;font-size:22px}
+
+    /* Layout */
+    .grid{display:grid;grid-template-columns:24p0x 1fr;gap:24px}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}}
+
+    /* Sidebar */
+    .sidebar{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);height:max-content}
+    .sidebar h2{margin:0 0 16px;font-size:17px}
+    .sidebar nav a{
+      display:block;padding:10px 12px;border-radius:10px;text-decoration:none;color:#0f172a;margin-bottom:6px
+    }
+    .sidebar nav a.active{background:var(--accent);color:white;font-weight:600}
+    .sidebar nav a:hover{background:#f0f2f5}
+
+    /* Profile card */
+    .card{background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .section-title{margin:0 0 12px;font-size:18px;font-weight:600}
+
+    /* Profile info */
+    .profile-row{display:flex;gap:16px;flex-wrap:wrap}
+    .avatar{width:90px;height:90px;background:#e2e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--muted)}
+
+    .info-fields{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    @media(max-width:600px){.info-fields{grid-template-columns:1fr}}
+
+    label{font-size:13px;color:var(--muted)}
+    input{width:100%;padding:10px;border-radius:10px;border:1px solid #e5e7eb;background:transparent}
+
+    .save-btn{margin-top:12px;padding:12px 18px;background:var(--accent);border:0;color:white;border-radius:10px;font-weight:600;cursor:pointer}
+
+    /* Orders */
+    .orders{margin-top:24px}
+    .order{background:var(--card);padding:16px;border-radius:14px;box-shadow:var(--shadow);margin-bottom:14px}
+    .order h3{margin:0 0 6px;font-size:16px}
+    .order small{color:var(--muted)}
+    .items{margin-top:8px;color:var(--muted);font-size:14px}
+
+    /* Notes section */
+    .notes{background:var(--card);padding:12px;border-radius:10px;margin-top:20px;font-size:14px}
+    ul{margin-left:20px}
+  </style>
+</head>
+<body>
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">BabyZone💕</div>
+    <ul>
+        <li><a href="baby.html">Home</a></li>
+        <li><a href="clothes.html">Products</a></li>
+        <li><a href="card.html">Cart</a></li>
+        <li><a href="baby_tips.html">Baby Tips</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+     
+    </header>
+
+    <div class="grid">
+
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <h2>Account</h2>
+        <nav>
+          <a href="#" class="active" data-section="profile-info">Profile Info</a>
+          <a href="#" data-section="past-orders">Past Orders</a>
+          <a href="#" data-section="addresses">Saved Addresses</a>
+          <a href="#" data-section="payments">Payment Methods</a>
+          <a href="#" data-section="logout">Logout</a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main>
+
+        <!-- Profile Information -->
+        <section id="profile-info" class="card section-panel">
+          <h2 class="section-title">Personal Information</h2>
+
+          <div class="profile-row">
+            <div class="avatar">👤</div>
+
+            <div class="info-fields">
+              <div>
+                <label>Full Name</label>
+                <input type="text" value=""/>
+              </div>
+
+              <div>
+                <label>Email</label>
+                <input type="email" value="" />
+              </div>
+
+              <div>
+                <label>Phone Number</label>
+                <input type="text" value="" />
+              </div>
+
+              <div>
+                <label>Date of Birth</label>
+                <input type="date" />
+              </div>
+            </div>
+          </div>
+
+          <button class="save-btn">Save Changes</button>
+        </section>
+
+
+        <!-- Past Orders -->
+        <section id="past-orders" class="orders section-panel">
+          <h2 class="section-title">Past Orders</h2>
+
+          <!-- ORDER 1 -->
+          <div class="order">
+            <h3>Order #15672</h3>
+            <small>Placed on: 20 Feb 2025 • Delivered</small>
+
+            <div class="items">
+              <div style="display:flex;gap:12px;margin-top:10px;">
+                <img src="https://via.placeholder.com/70" style="border-radius:8px;">
+                <div>
+                  <strong>Baby Cotton Shirt</strong><br>
+                  Qty: 1 • ₹450
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;margin-top:10px;">
+                <img src="https://via.placeholder.com/70" style="border-radius:8px;">
+                <div>
+                  <strong>Feeding Bottle</strong><br>
+                  Qty: 2 • ₹299 each
+                </div>
+              </div>
+            </div>
+
+            <p style="margin-top:10px;"><strong>Total Amount:</strong> ₹1048</p>
+            <p><strong>Payment Method:</strong> UPI</p>
+            <p><strong>Delivery Address:</strong> 123 ABC Street, Mumbai, 400001</p>
+          </div>
+
+          <!-- ORDER 2 -->
+          <div class="order">
+            <h3>Order #14920</h3>
+            <small>Placed on: 05 Jan 2025 • Delivered</small>
+
+            <div class="items">
+              <div style="display:flex;gap:12px;margin-top:10px;">
+                <img src="https://via.placeholder.com/70" style="border-radius:8px;">
+                <div>
+                  <strong>Baby Rattle Toy</strong><br>
+                  Qty: 1 • ₹350
+                </div>
+              </div>
+            </div>
+
+            <p style="margin-top:10px;"><strong>Total Amount:</strong> ₹350</p>
+            <p><strong>Payment Method:</strong> Credit Card</p>
+            <p><strong>Delivery Address:</strong> 501 Sunset Avenue, Pune, 411001</p>
+          </div>
+
+        </section>
+
+        <!-- Saved Addresses -->
+        <section id="addresses" class="card section-panel">
+          <h2 class="section-title">Saved Addresses</h2>
+
+          <div id="addressForm">
+            <label>Full Address</label>
+            <input type="text" placeholder="Enter your address" />
+
+            <label>City</label>
+            <input type="text" placeholder="City" />
+
+            <label>Pincode</label>
+            <input type="text" placeholder="Pincode" />
+
+            <button class="save-btn" id="saveAddressBtn">Save Address</button>
+          </div>
+
+          <!-- Slide Panel After Saving -->
+          <div id="addressSavedSlide" style="display:none;opacity:0;transform:translateX(20px);transition:opacity .3s ease, transform .3s ease;">
+            <h3>Address Saved Successfully!</h3>
+            <p>Your address has been added to your profile.</p>
+          </div>
+        </section>
+
+        <!-- Payment Methods -->
+        <section id="payments" class="card section-panel">
+          <h2 class="section-title">Payment Methods</h2>
+
+          <!-- Payment Tabs -->
+          <div class="pay-tabs" style="display:flex;gap:10px;margin-bottom:16px;">
+            <button class="pay-tab active" data-pay="credit">Credit Card</button>
+            <button class="pay-tab" data-pay="debit">Debit Card</button>
+            <button class="pay-tab" data-pay="upi">UPI</button>
+            <button class="pay-tab" data-pay="netbank">Net Banking</button>
+          </div>
+
+          <!-- Credit Card Form -->
+          <div class="pay-panel" id="credit" style="display:block;">
+            <label>Cardholder Name</label>
+            <input type="text" placeholder="Enter name on card" />
+
+            <label>Card Number</label>
+            <input type="text" placeholder="XXXX XXXX XXXX XXXX" />
+
+            <div class="profile-row">
+              <div style="flex:1;">
+                <label>Expiry Date</label>
+                <input type="text" placeholder="MM/YY" />
+              </div>
+              <div style="flex:1;">
+                <label>CVV</label>
+                <input type="password" placeholder="***" />
+              </div>
+            </div>
+            <button class="save-btn">Save Credit Card</button>
+          </div>
+
+          <!-- Debit Card Form -->
+          <div class="pay-panel" id="debit" style="display:none;">
+            <label>Cardholder Name</label>
+            <input type="text" placeholder="Enter name on card" required>
+
+            <label>Debit Card Number</label>
+            <input type="text" placeholder="XXXX XXXX XXXX XXXX" required>
+
+            <button class="save-btn">Save Debit Card</button>
+          </div>
+
+          <!-- UPI Form -->
+          <div class="pay-panel" id="upi" style="display:none;">
+            <label>UPI ID</label>
+            <input type="text" placeholder="example@upi" />
+
+            <button class="save-btn">Link UPI</button>
+          </div>
+
+          <!-- Net Banking -->
+          <div class="pay-panel" id="netbank" style="display:none;">
+            <label>Select Bank</label>
+            <select style="width:100%;padding:10px;border-radius:10px;border:1px solid #e5e7eb;">
+              <option>SBI</option>
+              <option>HDFC</option>
+              <option>ICICI</option>
+              <option>Axis Bank</option>
+              <option>Other Banks</option>
+            </select>
+
+            <button class="save-btn">Proceed to Bank</button>
+          </div>
+        </section>
+
+        <!-- Logout Section -->
+        <section id="logout" class="card section-panel">
+          <h2 class="section-title">Logout</h2>
+          <p>Click below to securely log out of your account.</p>
+          <button class="save-btn" id="logoutBtn">Logout & Exit</button>
+        </section>
+
+        <!-- Reference / points -->
+        <section class="notes">
+          <strong>Reference & points</strong>
+          <ul>
+            <li>View & edit personal information with clean form layout.</li>
+            <li>Sidebar navigation for account management (profile, orders, addresses, payments).</li>
+            <li>Past orders show order number, delivery status, items, payment, total, and address.</li>
+            <li>Responsive layout: Sidebar collapses on small screens.</li>
+            <li>Accessible labels, readable contrasts, proper spacing.</li>
+            <li>Extendable: Add profile photo upload, order tracking, invoice download, etc.</li>
+          </ul>
+        </section>
+
+      </main>
+    </div>
+  </div>
+<style>
+  /* simple slide/fade transition for panels */
+  .section-panel{display:none;opacity:0;transform:translateX(12px);transition:opacity .28s ease,transform .28s ease}
+  .section-panel.is-active{display:block;opacity:1;transform:translateX(0)}
+</style>
+
+<script>
+function showSection(id){
+  const panels = document.querySelectorAll('.section-panel');
+  panels.forEach(p => {
+    if(p.id === id){
+      p.classList.add('is-active');
+    } else {
+      p.classList.remove('is-active');
+    }
+  });
+  document.querySelectorAll('.sidebar nav a').forEach(a=>{
+    a.classList.toggle('active', a.dataset.section === id);
+  });
+}
+
+// Logout button functionality
+document.addEventListener('click', function(e){
+  if(e.target && e.target.id === 'logoutBtn'){
+    alert('You have been logged out successfully.');
+    window.location.href = 'index.html';
+  }
+});
+
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('[data-section]').forEach(el=>{
+    el.addEventListener('click', e=>{
+      e.preventDefault();
+      showSection(el.dataset.section);
+    });
+  });
+  showSection('profile-info');
+});
+
+// Address Save Slide Transition
+const addressBtn = document.getElementById('saveAddressBtn');
+const addressForm = document.getElementById('addressForm');
+const addressSlide = document.getElementById('addressSavedSlide');
+
+if(addressBtn){
+  addressBtn.addEventListener('click', ()=>{
+    addressForm.style.opacity = 0;
+    setTimeout(()=>{
+      addressForm.style.display = 'none';
+      addressSlide.style.display = 'block';
+      setTimeout(()=>{
+        addressSlide.style.opacity = 1;
+        addressSlide.style.transform = 'translateX(0)';
+      },10);
+    },200);
+  });
+}
+
+// Payment Method Tab
+const payTabs = document.querySelectorAll('.pay-tab');
+const payPanels = document.querySelectorAll('.pay-panel');
+
+payTabs.forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    const target = tab.dataset.pay;
+    payTabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    payPanels.forEach(panel=>{
+      if(panel.id===target){
+        panel.style.display='block';
+        panel.style.opacity=0;
+        panel.style.transform='translateX(20px)';
+        setTimeout(()=>{
+          panel.style.transition='opacity .3s ease, transform .3s ease';
+          panel.style.opacity=1;
+          panel.style.transform='translateX(0)';
+        },10);
+      }else{
+        panel.style.transition='opacity .2s ease';
+        panel.style.opacity=0;
+        setTimeout(()=>{panel.style.display='none'},200);
+      }
+    });
+  });
+});
+// Save Changes Button for Profile Info
+const saveProfileBtn = document.querySelector('#profile-info .save-btn');
+if(saveProfileBtn){
+  saveProfileBtn.addEventListener('click', ()=>{
+    alert('Profile changes saved successfully!');
+
+    // Clear all input fields
+    const inputs = document.querySelectorAll('#profile-info input');
+    inputs.forEach(input => {
+      input.value = ''; // clear field
+      input.style.borderColor = '#4CAF50'; // optional visual feedback
+    });
+
+    // Reset border color after 1.5s
+    setTimeout(()=>{
+      inputs.forEach(input => input.style.borderColor = '#e5e7eb');
+    }, 1500);
+  });
+}
+
+
+</script>
+</body>
+</html>

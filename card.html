@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f8f8f8;
+    }
+
+    nav {
+        background: #ffd6e7;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        font-size: 26px;
+        color: #ff6fa8;
+        font-weight: bold;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .cart-counter {
+        background: #ff6fa8;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-size: 12px;
+        vertical-align: top;
+        margin-left: 5px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 80px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+        gap: 15px;
+    }
+
+    .cart-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .cart-left img {
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .cart-left div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cart-left div span {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .cart-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .cart-price {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .quantity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quantity button {
+        padding: 3px 8px;
+        border: none;
+        background: #0078ff;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .empty-cart {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 18px;
+        color: #777;
+    }
+
+    .empty-cart-icon {
+        font-size: 80px;
+        color: #d0d0d0;
+    }
+
+    .cart-total {
+        margin-top: 30px;
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        background: #0078ff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #005fcc;
+    }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">BabyZone💕</div>
+    <ul>
+        <li><a href="baby.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="card.html">Cart <span id="cartCount" class="cart-counter">0</span></a></li>
+        <li><a href="baby_tips.html">Baby Tips</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+
+<div class="container" id="cartContainer">
+    <!-- Cart items will be dynamically inserted here -->
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartContainer = document.getElementById("cartContainer");
+
+function updateCartCount() {
+    document.getElementById("cartCount").innerText = cart.length;
+}
+
+function renderCart() {
+    cartContainer.innerHTML = "";
+
+    if(cart.length === 0){
+        cartContainer.innerHTML = `
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your Cart is Empty</h2>
+                <p>It looks like you haven’t added any products yet.</p>
+                <a href="clothes.html" class="btn">Start Shopping</a>
+            </div>
+        `;
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <div class="cart-left">
+                <img src="${item.img || 'https://via.placeholder.com/70'}" alt="${item.name}">
+                <div>
+                    <span>${item.name}</span>
+                    ${item.selectedSize ? `<span>Size: ${item.selectedSize}</span>` : ""}
+                </div>
+            </div>
+            <div class="cart-right">
+                <span class="cart-price">₹${item.price}</span>
+                <div class="quantity">
+                    <button onclick="changeQuantity(${index}, -1)">-</button>
+                    <span>${item.quantity || 1}</span>
+                    <button onclick="changeQuantity(${index}, 1)">+</button>
+                </div>
+            </div>
+        `;
+        cartContainer.appendChild(div);
+    });
+
+    const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    const totalDiv = document.createElement("div");
+    totalDiv.className = "cart-total";
+    totalDiv.innerHTML = `Total: ₹${total} <button class="btn" onclick="checkout()">Checkout</button>`;
+    cartContainer.appendChild(totalDiv);
+}
+
+function changeQuantity(index, delta) {
+    cart[index].quantity = (cart[index].quantity || 1) + delta;
+    if(cart[index].quantity < 1) {
+        cart.splice(index, 1); // remove item if quantity < 1
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+}
+
+function checkout() {
+    if(cart.length === 0){
+        alert("Your cart is empty!");
+        return;
+    }
+    const total = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    alert(`Proceeding to checkout...\nTotal: ₹${total}`);
+    // Optional: clear cart after checkout
+    // cart = [];
+    // localStorage.setItem("cart", JSON.stringify(cart));
+    // renderCart();
+    // updateCartCount();
+}
+
+updateCartCount();
+renderCart();
+</script>
+
+</body>
+</html>

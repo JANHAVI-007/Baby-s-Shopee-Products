@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BabyZone FAQ</title>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* --- General Reset --- */
+*{ margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+body{ background: #ffe3f5; color: #333; overflow-x:hidden; }
+
+/* --- Header --- */
+header{ text-align:center; padding:30px 0; background:#ffb6da; color:white; font-size:2rem; font-weight:bold; }
+header span{ color:#fff; }
+
+/* --- Hero Section --- */
+.hero{ text-align:center; padding:60px 20px; }
+.hero h2{ font-size:2.5rem; color:#ff4da6; margin-bottom:10px; }
+.hero p{ font-size:1.2rem; margin-top:10px; }
+
+/* --- FAQ Section --- */
+.faq-section{ max-width:900px; margin:50px auto; padding:0 20px; }
+.faq-section h2{ text-align:center; font-size:2rem; margin-bottom:30px; color:#ff4da6; }
+.faq-item{ background:white; margin-bottom:15px; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer; }
+.faq-item:hover{ transform:scale(1.02); box-shadow:0 6px 20px rgba(0,0,0,0.2); }
+.faq-question{ padding:20px; font-size:1.1rem; font-weight:600; position:relative; }
+.faq-question .arrow{ position:absolute; right:20px; top:50%; transform:translateY(-50%); transition:0.3s; }
+.faq-item.active .faq-question .arrow{ transform:translateY(-50%) rotate(180deg); }
+.faq-answer{ max-height:0; overflow:hidden; padding:0 20px; transition:0.4s; background:#ffe3f5; }
+.faq-item.active .faq-answer{ max-height:500px; padding:20px; }
+
+/* --- Footer --- */
+footer{ text-align:center; padding:20px 0; background:#ff4da6; color:white; margin-top:50px; }
+
+/* --- Responsive --- */
+@media(max-width:768px){ .faq-question{ font-size:1rem; } }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    Baby<span>Zone</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h2>Welcome to Our BabyZone</h2>
+    <p>Find the safest and cutest products for your little ones!</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            What age range are your baby products suitable for?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Our products are suitable for newborns up to 3 years old, with each item labeled for age appropriateness.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Are your toys safe and non-toxic?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Yes! All our toys are made from BPA-free, non-toxic materials and meet international safety standards.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Do you offer gift wrapping services?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>We provide adorable themed gift wrapping for all products to make your gifts extra special.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Can I return or exchange a product?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Returns or exchanges are accepted within 30 days for unopened and undamaged products. Some items may have special conditions.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Do you ship internationally?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Yes! We ship to selected countries worldwide. Shipping fees and delivery times depend on the destination.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            How do I care for baby clothing?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Wash baby clothes gently in cold water and air dry to maintain softness and durability.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            How can I track my order?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>After placing an order, you’ll receive a tracking link via email to monitor delivery.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Are your products eco-friendly?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Many of our products are made from sustainable and eco-friendly materials.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Do you have a loyalty program?
+            <span class="arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+            <p>Yes! Earn points on every purchase and redeem them for discounts on future orders.</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    © 2025 BabyZone| All Rights Reserved
+</footer>
+
+<script>
+// ===== FAQ Toggle =====
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('active');
+    });
+});
+</script>
+
+</body>
+</html>
